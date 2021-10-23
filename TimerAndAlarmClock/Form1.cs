@@ -112,15 +112,15 @@ namespace TimerAndAlarmClock
 
         private void isTimer_CheckedChanged(object sender, EventArgs e)
         {
-           /* dateTimePicker.Format = DateTimePickerFormat.Time;
-            dateTimePicker.Value = DateTime.Now.Date;*/
+           /* dateTimePicker.Format = DateTimePickerFormat.Time;*/
+            dateTimePicker.Value = DateTime.Now.Date;
         }
 
         private void isAlarm_CheckedChanged(object sender, EventArgs e)
         {
            /* dateTimePicker.Format = DateTimePickerFormat.Custom;
-            dateTimePicker.CustomFormat = "MM/dd/yyyy HH:mm:ss";
-            dateTimePicker.Value = DateTime.Now;*/
+            dateTimePicker.CustomFormat = "MM/dd/yyyy HH:mm:ss";*/
+            dateTimePicker.Value = DateTime.Now;
         }
     }
 }
