@@ -49,6 +49,7 @@ namespace TimerAndAlarmClock
             this.listBoxTimersAndAlarms.Name = "listBoxTimersAndAlarms";
             this.listBoxTimersAndAlarms.Size = new System.Drawing.Size(352, 160);
             this.listBoxTimersAndAlarms.TabIndex = 6;
+            this.listBoxTimersAndAlarms.SelectedIndexChanged += new System.EventHandler(this.listBoxTimersAndAlarms_SelectedIndexChanged);
             // 
             // dateTimePicker
             // 
@@ -131,7 +132,7 @@ namespace TimerAndAlarmClock
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.dateTimePicker);
             this.Controls.Add(this.listBoxTimersAndAlarms);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Text = "Form1";

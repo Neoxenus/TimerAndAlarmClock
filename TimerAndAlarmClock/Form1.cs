@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Media;
 
 
 
@@ -20,6 +20,7 @@ namespace TimerAndAlarmClock
             InitializeComponent();
         }
 
+        SoundPlayer sound = new SoundPlayer(@"D:\Codes_Cpp\TimerAndAlarmClock\TimerAndAlarmClock\Airmow - Time (ft. ROSA).wav");
 
         List<TimerAndAlarm> timers = new List<TimerAndAlarm>();
         private string Int2StringTime(long time)
@@ -48,10 +49,11 @@ namespace TimerAndAlarmClock
                         {
                             listBoxTimersAndAlarms.Items.RemoveAt(i+1);
                             listBoxTimersAndAlarms.Items.RemoveAt(i);
-                            
+                            sound.Play();
                             MessageBox.Show("Time of " + (i + 1) + (timers[i / 2].getType() ? " alarm" : " timer") + " is out");
+                            sound.Stop();
                             timers.RemoveAt(i / 2);
-                            Console.Beep();
+                            
                         }
                         else
                         {
@@ -118,9 +120,16 @@ namespace TimerAndAlarmClock
 
         private void isAlarm_CheckedChanged(object sender, EventArgs e)
         {
-           /* dateTimePicker.Format = DateTimePickerFormat.Custom;
+           /*dateTimePicker.Format = DateTimePickerFormat.Custom;
             dateTimePicker.CustomFormat = "MM/dd/yyyy HH:mm:ss";*/
             dateTimePicker.Value = DateTime.Now;
+        }
+
+        private void listBoxTimersAndAlarms_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           /* if (listBoxTimersAndAlarms.SelectedIndex % 2 == 1)
+                listBoxTimersAndAlarms.SelectedIndex--;
+                MessageBox.Show(listBoxTimersAndAlarms.SelectedIndex.ToString());*/
         }
     }
 }
