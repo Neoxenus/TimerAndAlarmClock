@@ -40,46 +40,51 @@ namespace TimerAndAlarmClock
         private void timer1_Tick(object sender, EventArgs e)
         {
             if(timers.Count!=0)
-                for (int i = 0; i < listBoxTimersAndAlarms.Items.Count; i+=2)
+                for (int i = 0; i < listBoxTimersAndAlarms.Items.Count; ++i)
                 {
+                    bool isSelected = listBoxTimersAndAlarms.GetSelected(i);
                     DateTime currentTime = DateTime.Now;
-                    if (timers[i / 2].getType() == false)//timer
+                    if (timers[i].getType() == false)//timer
                     {
-                        if (timers[i / 2].getValue() == timers[i / 2].getValue().Date)
+                        if (timers[i].getValue() == timers[i].getValue().Date)
                         {
                             listBoxTimersAndAlarms.Items.RemoveAt(i+1);
                             listBoxTimersAndAlarms.Items.RemoveAt(i);
                             sound.Play();
-                            MessageBox.Show("Time of " + (i + 1) + (timers[i / 2].getType() ? " alarm" : " timer") + " is out");
+                            MessageBox.Show("Time of " + (i + 1) + (timers[i].getType() ? " alarm" : " timer") + " is out");
                             sound.Stop();
-                            timers.RemoveAt(i / 2);
+                            timers.RemoveAt(i);
                             
                         }
                         else
                         {
-                            --timers[i / 2];
-                            listBoxTimersAndAlarms.Items[i + 1] = ("Remaining time " + timers[i / 2].getValue().ToString("HH:mm:ss"));
+                            --timers[i];
+                            listBoxTimersAndAlarms.Items[i] = ("Timer " + timers[i].getStartValue().ToString("HH:mm:ss")
+                               + "\tRemaining time " + timers[i].getValue().ToString("HH:mm:ss"));
                         }
                     }
                     else
                     {
-                        if (timers[i / 2].getValue() <= DateTime.Now)
+                        if (timers[i].getValue() <= DateTime.Now)
                         {
                             listBoxTimersAndAlarms.Items.RemoveAt(i+1);
                             listBoxTimersAndAlarms.Items.RemoveAt(i);
-                            
-                            MessageBox.Show("Time of " + (i + 1) + (timers[i/2].getType()? " alarm" : " timer") +" is out");
-                            timers.RemoveAt(i / 2);
-                            Console.Beep();
+
+                            sound.Play();
+                            MessageBox.Show("Time of " + (i + 1) + (timers[i].getType() ? " alarm" : " timer") + " is out");
+                            sound.Stop();
+                            timers.RemoveAt(i);
                         }
                         else
                         {
                             DateTime cur = DateTime.Now;
                             
-                             TimeSpan t = timers[i / 2].getValue().Subtract(cur);
-                            listBoxTimersAndAlarms.Items[i + 1] = ("Remaining time " + t.ToString(@"dd\.hh\:mm\:ss"));
+                             TimeSpan t = timers[i].getValue().Subtract(cur);
+                            listBoxTimersAndAlarms.Items[i] = ("Alarm " + timers[i].getStartValue().ToString("HH:mm:ss")
+                                + "\tRemaining time " + timers[i].getRemainingTime().ToString(@"dd\.hh\:mm\:ss"));
                         }
                     }
+                    listBoxTimersAndAlarms.SetSelected(i, isSelected);
                 }
         }
 
@@ -88,10 +93,10 @@ namespace TimerAndAlarmClock
             if(dateTimePicker.Value != dateTimePicker.Value.Date)
             if(isTimer.Checked)
             {
-                timers.Add(new TimerAndAlarm(dateTimePicker.Value, false));
-                listBoxTimersAndAlarms.Items.Add("Timer " + dateTimePicker.Value.TimeOfDay.ToString());
-                listBoxTimersAndAlarms.Items.Add("Remaining time " + dateTimePicker.Value.TimeOfDay.ToString());
-                
+                    listBoxTimersAndAlarms.Items.Add("Timer " + dateTimePicker.Value.TimeOfDay.ToString()
+                            + "\tRemaining time " + dateTimePicker.Value.TimeOfDay.ToString());
+                    timers.Add(new TimerAndAlarm(dateTimePicker.Value, listBoxTimersAndAlarms.Items.Count - 1, false));
+
             }
             else if(isAlarm.Checked)
             {
@@ -101,15 +106,16 @@ namespace TimerAndAlarmClock
                     }
                    else
                     {
-                        timers.Add(new TimerAndAlarm(dateTimePicker.Value, true));
+                       
                         DateTime cur = DateTime.Now;
 
                         TimeSpan t = dateTimePicker.Value.Subtract(cur);
-                        listBoxTimersAndAlarms.Items.Add("Alarm " + dateTimePicker.Value.TimeOfDay.ToString());
-                        listBoxTimersAndAlarms.Items.Add("Remaining time " + t.ToString(@"dd\.hh\:mm\:ss"));
+                        listBoxTimersAndAlarms.Items.Add("Alarm " + dateTimePicker.Value.TimeOfDay.ToString()
+                            + "\tRemaining time " + t.ToString(@"dd\.hh\:mm\:ss"));
+                        timers.Add(new TimerAndAlarm(dateTimePicker.Value, listBoxTimersAndAlarms.Items.Count - 1, true));
                     }
                     
-                }
+             }
         }
 
         private void isTimer_CheckedChanged(object sender, EventArgs e)
@@ -127,9 +133,32 @@ namespace TimerAndAlarmClock
 
         private void listBoxTimersAndAlarms_SelectedIndexChanged(object sender, EventArgs e)
         {
-           /* if (listBoxTimersAndAlarms.SelectedIndex % 2 == 1)
-                listBoxTimersAndAlarms.SelectedIndex--;
-                MessageBox.Show(listBoxTimersAndAlarms.SelectedIndex.ToString());*/
+
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            if (timers.Count != 0)
+                for (int i = timers.Count - 1; i >=0; --i)
+                {
+                    if(listBoxTimersAndAlarms.GetSelected(timers[i].getIndex()))
+                    {
+                        deleteFromListBox(i);
+                        timers.RemoveAt(i);
+                    }
+                }
+        }
+
+        private void deleteFromListBox(int index)
+        {
+            listBoxTimersAndAlarms.Items.RemoveAt(timers[index].getIndex());
+            for(int i=0;i<timers.Count;++i)
+            {
+                if(timers[i].getIndex() > timers[index].getIndex())
+                {
+                    timers[i].setIndex(timers[i].getIndex()-1);
+                }
+            }
         }
     }
 }

@@ -4,52 +4,33 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-/*public class TimerAndAlarm
-{
-    long value;
-    bool typeOfTimer;//false - timer; true - alarma
-
-    public TimerAndAlarm()
-    {
-        value = 0;
-        typeOfTimer = false;
-    }
-    public TimerAndAlarm(long inputValue, bool type = false)
-    {
-        setValue(inputValue, type);
-    }
-    public long getValue()
-    {
-        return value;
-    }
-    public void setValue(long inputValue, bool type = false)
-    {
-        value = inputValue;
-        typeOfTimer = type;
-    }
-    public static TimerAndAlarm operator --(TimerAndAlarm t)
-    {
-        return new TimerAndAlarm(t.value - 1, t.typeOfTimer);
-    }
-}*/
-
 public class TimerAndAlarm
 {
-    DateTime value;
+    DateTime value, startValue;
     bool typeOfTimer;//false - timer; true - alarma
+    int indexInListBox;
 
     public TimerAndAlarm()
     {
         value = new DateTime(0,0,0,0,0,0);
+        startValue = value;
         typeOfTimer = false;
+        indexInListBox = -1;
     }
-    public TimerAndAlarm(DateTime inputValue, bool type = false)
+    public TimerAndAlarm(DateTime inputValue, int index = -1, bool type = false)
     {
         setValue(inputValue, type);
+        startValue = value;
+        indexInListBox = index;
     }
+
     public DateTime getValue()
     {
         return value;
+    }
+    public DateTime getStartValue()
+    {
+        return startValue;
     }
     public bool getType()
     {
@@ -62,7 +43,24 @@ public class TimerAndAlarm
     }
     public static TimerAndAlarm operator --(TimerAndAlarm t)
     {
-        return new TimerAndAlarm(t.value.AddSeconds(-1), t.typeOfTimer);
+        TimerAndAlarm ans = new TimerAndAlarm(t.startValue, t.indexInListBox, t.typeOfTimer);
+        ans.setValue(t.value.AddSeconds(-1));
+        return ans;
+    }
+    public TimeSpan getRemainingTime()
+    {
+        DateTime cur = DateTime.Now;
+
+        TimeSpan t = value.Subtract(cur);
+        return t;
+    }
+    public int getIndex()
+    {
+        return indexInListBox;
+    }
+    public void setIndex(int index = -1)
+    {
+        indexInListBox = index;
     }
 }
 
