@@ -39,6 +39,7 @@ namespace TimerAndAlarmClock
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonDelete = new System.Windows.Forms.Button();
+            this.isDontDisturbMode = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +53,7 @@ namespace TimerAndAlarmClock
             this.listBoxTimersAndAlarms.Location = new System.Drawing.Point(12, 194);
             this.listBoxTimersAndAlarms.Name = "listBoxTimersAndAlarms";
             this.listBoxTimersAndAlarms.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBoxTimersAndAlarms.Size = new System.Drawing.Size(610, 355);
+            this.listBoxTimersAndAlarms.Size = new System.Drawing.Size(360, 147);
             this.listBoxTimersAndAlarms.TabIndex = 6;
             this.listBoxTimersAndAlarms.SelectedIndexChanged += new System.EventHandler(this.listBoxTimersAndAlarms_SelectedIndexChanged);
             // 
@@ -63,7 +64,7 @@ namespace TimerAndAlarmClock
             this.dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.dateTimePicker.Location = new System.Drawing.Point(12, 12);
             this.dateTimePicker.Name = "dateTimePicker";
-            this.dateTimePicker.Size = new System.Drawing.Size(610, 20);
+            this.dateTimePicker.Size = new System.Drawing.Size(360, 20);
             this.dateTimePicker.TabIndex = 7;
             this.dateTimePicker.Value = new System.DateTime(2021, 10, 23, 0, 0, 0, 0);
             // 
@@ -87,7 +88,7 @@ namespace TimerAndAlarmClock
             this.isAlarm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.isAlarm.AutoSize = true;
-            this.isAlarm.Location = new System.Drawing.Point(523, 19);
+            this.isAlarm.Location = new System.Drawing.Point(273, 19);
             this.isAlarm.Name = "isAlarm";
             this.isAlarm.Size = new System.Drawing.Size(81, 17);
             this.isAlarm.TabIndex = 10;
@@ -115,14 +116,14 @@ namespace TimerAndAlarmClock
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.isDontDisturbMode);
             this.groupBox1.Controls.Add(this.isTimer);
             this.groupBox1.Controls.Add(this.isAlarm);
             this.groupBox1.Location = new System.Drawing.Point(12, 38);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(610, 62);
+            this.groupBox1.Size = new System.Drawing.Size(360, 62);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
             // 
             // groupBox2
             // 
@@ -132,15 +133,14 @@ namespace TimerAndAlarmClock
             this.groupBox2.Controls.Add(this.buttonAdd);
             this.groupBox2.Location = new System.Drawing.Point(12, 106);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(610, 62);
+            this.groupBox2.Size = new System.Drawing.Size(360, 62);
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
             // 
             // buttonDelete
             // 
             this.buttonDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonDelete.Location = new System.Drawing.Point(453, 19);
+            this.buttonDelete.Location = new System.Drawing.Point(197, 19);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(157, 30);
             this.buttonDelete.TabIndex = 13;
@@ -148,11 +148,22 @@ namespace TimerAndAlarmClock
             this.buttonDelete.UseVisualStyleBackColor = true;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
+            // isDontDisturbMode
+            // 
+            this.isDontDisturbMode.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.isDontDisturbMode.AutoSize = true;
+            this.isDontDisturbMode.Location = new System.Drawing.Point(120, 19);
+            this.isDontDisturbMode.Name = "isDontDisturbMode";
+            this.isDontDisturbMode.Size = new System.Drawing.Size(87, 17);
+            this.isDontDisturbMode.TabIndex = 11;
+            this.isDontDisturbMode.Text = "Don\'t Disturb";
+            this.isDontDisturbMode.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(634, 559);
+            this.ClientSize = new System.Drawing.Size(384, 361);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dateTimePicker);
@@ -178,6 +189,7 @@ namespace TimerAndAlarmClock
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.CheckBox isDontDisturbMode;
     }
 }
 

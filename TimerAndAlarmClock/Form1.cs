@@ -20,7 +20,7 @@ namespace TimerAndAlarmClock
             InitializeComponent();
         }
 
-        SoundPlayer sound = new SoundPlayer(@"D:\Codes_Cpp\TimerAndAlarmClock\TimerAndAlarmClock\Airmow - Time (ft. ROSA).wav");
+        SoundPlayer sound = new SoundPlayer(@"D:\Codes_Cpp\TimerAndAlarmClock\TimerAndAlarmClock\Godzilla (feat. Juice WRLD) [Official Audio].wav");
 
         List<TimerAndAlarm> timers = new List<TimerAndAlarm>();
         private string Int2StringTime(long time)
@@ -40,39 +40,44 @@ namespace TimerAndAlarmClock
         private void timer1_Tick(object sender, EventArgs e)
         {
             if(timers.Count!=0)
-                for (int i = 0; i < listBoxTimersAndAlarms.Items.Count; ++i)
+                for (int i = 0; i < timers.Count; ++i)
                 {
-                    bool isSelected = listBoxTimersAndAlarms.GetSelected(i);
+                    bool isSelected = listBoxTimersAndAlarms.GetSelected(timers[i].getIndex());
                     DateTime currentTime = DateTime.Now;
                     if (timers[i].getType() == false)//timer
                     {
                         if (timers[i].getValue() == timers[i].getValue().Date)
                         {
-                            listBoxTimersAndAlarms.Items.RemoveAt(i+1);
-                            listBoxTimersAndAlarms.Items.RemoveAt(i);
-                            sound.Play();
-                            MessageBox.Show("Time of " + (i + 1) + (timers[i].getType() ? " alarm" : " timer") + " is out");
-                            sound.Stop();
+                            deleteFromListBox(i);
+                            if(!isDontDisturbMode.Checked)
+                            {
+                                sound.Play();
+                                MessageBox.Show("Time of " + (i + 1) + (timers[i].getType() ? " alarm" : " timer") + " is out");
+                                sound.Stop();
+                            }
                             timers.RemoveAt(i);
                             
                         }
                         else
                         {
                             --timers[i];
-                            listBoxTimersAndAlarms.Items[i] = ("Timer " + timers[i].getStartValue().ToString("HH:mm:ss")
+                            listBoxTimersAndAlarms.Items[timers[i].getIndex()] = ("Timer " + timers[i].getStartValue().ToString("HH:mm:ss")
                                + "\tRemaining time " + timers[i].getValue().ToString("HH:mm:ss"));
+                            listBoxTimersAndAlarms.SetSelected(timers[i].getIndex(), isSelected);
                         }
                     }
                     else
                     {
                         if (timers[i].getValue() <= DateTime.Now)
                         {
-                            listBoxTimersAndAlarms.Items.RemoveAt(i+1);
-                            listBoxTimersAndAlarms.Items.RemoveAt(i);
+                            deleteFromListBox(i);
 
-                            sound.Play();
-                            MessageBox.Show("Time of " + (i + 1) + (timers[i].getType() ? " alarm" : " timer") + " is out");
-                            sound.Stop();
+                            if (!isDontDisturbMode.Checked)
+                            {
+                                sound.Play();
+                                MessageBox.Show("Time of " + (i + 1) + (timers[i].getType() ? " alarm" : " timer") + " is out");
+                                sound.Stop();
+                            }
                             timers.RemoveAt(i);
                         }
                         else
@@ -80,11 +85,12 @@ namespace TimerAndAlarmClock
                             DateTime cur = DateTime.Now;
                             
                              TimeSpan t = timers[i].getValue().Subtract(cur);
-                            listBoxTimersAndAlarms.Items[i] = ("Alarm " + timers[i].getStartValue().ToString("HH:mm:ss")
+                            listBoxTimersAndAlarms.Items[timers[i].getIndex()] = ("Alarm " + timers[i].getStartValue().ToString("HH:mm:ss")
                                 + "\tRemaining time " + timers[i].getRemainingTime().ToString(@"dd\.hh\:mm\:ss"));
+                            listBoxTimersAndAlarms.SetSelected(timers[i].getIndex(), isSelected);
                         }
                     }
-                    listBoxTimersAndAlarms.SetSelected(i, isSelected);
+                    
                 }
         }
 
