@@ -80,7 +80,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Airmow - Time %28ft. ROSA%29.mp3" />
     <Content Include="Godzilla %28feat. Juice WRLD%29 [Official Audio].wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

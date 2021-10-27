@@ -6,29 +6,43 @@ using System.Windows.Forms;
 
 public class TimerAndAlarm
 {
-    DateTime value, startValue;
+    DateTime value;
+    TimeSpan startValue;
     bool typeOfTimer;//false - timer; true - alarma
+    bool isActive; //for timers
     int indexInListBox;
 
     public TimerAndAlarm()
     {
         value = new DateTime(0,0,0,0,0,0);
-        startValue = value;
         typeOfTimer = false;
+        isActive = false;
         indexInListBox = -1;
     }
     public TimerAndAlarm(DateTime inputValue, int index = -1, bool type = false)
     {
         setValue(inputValue, type);
-        startValue = value;
+        if (type)
+            startValue = value.Subtract(DateTime.Now);
+        else
+            startValue = value.Subtract(DateTime.Now.Date);
         indexInListBox = index;
+        isActive = false;
+    }
+    public void pauseResume()
+    {
+        isActive = !isActive;
     }
 
+    public bool getActive()
+    {
+        return isActive;
+    }
     public DateTime getValue()
     {
         return value;
     }
-    public DateTime getStartValue()
+    public TimeSpan getStartValue()
     {
         return startValue;
     }
@@ -43,11 +57,11 @@ public class TimerAndAlarm
     }
     public static TimerAndAlarm operator --(TimerAndAlarm t)
     {
-        TimerAndAlarm ans = new TimerAndAlarm(t.startValue, t.indexInListBox, t.typeOfTimer);
+        TimerAndAlarm ans = t;
         ans.setValue(t.value.AddSeconds(-1));
         return ans;
     }
-    public TimeSpan getRemainingTime()
+    public TimeSpan getRemainingTime()//method for alarms
     {
         DateTime cur = DateTime.Now;
 
@@ -61,6 +75,10 @@ public class TimerAndAlarm
     public void setIndex(int index = -1)
     {
         indexInListBox = index;
+    }
+    public TimeSpan toTimeSpan()//method for timers to get value with timespan type
+    {
+        return value.Subtract(DateTime.Now.Date);
     }
 }
 
@@ -77,7 +95,7 @@ namespace TimerAndAlarmClock
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Timer());
         }
     }
 }
