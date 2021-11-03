@@ -17,8 +17,9 @@ namespace TimerAndAlarmClock
     {
         public Timer()
         {
+           
             InitializeComponent();
-            
+            dateTimePicker.Value = DateTime.Now.Date;
         }
 
         SoundPlayer sound = new SoundPlayer(@"Godzilla (feat. Juice WRLD) [Official Audio].wav");

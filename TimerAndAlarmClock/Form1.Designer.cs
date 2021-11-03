@@ -270,7 +270,6 @@ namespace TimerAndAlarmClock
             this.MinimumSize = new System.Drawing.Size(400, 400);
             this.Name = "Timer";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.Text = "Form1";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
