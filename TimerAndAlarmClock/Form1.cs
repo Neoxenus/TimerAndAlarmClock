@@ -113,7 +113,10 @@ namespace TimerAndAlarmClock
                     {
                         listBoxTimersAndAlarms.Items.Add("Timer " + dateTimePicker.Value.TimeOfDay.ToString()
                                 + "\tRemaining time " + dateTimePicker.Value.TimeOfDay.ToString());
-                        timers.Add(new TimerAndAlarm(dateTimePicker.Value, listBoxTimersAndAlarms.Items.Count - 1, false));
+                        DateTime tmp = new DateTime(DateTime.Now.Date.Year, DateTime.Now.Date.Month, DateTime.Now.Date.Day
+                            , dateTimePicker.Value.Hour, dateTimePicker.Value.Minute, dateTimePicker.Value.Second);
+                        
+                        timers.Add(new TimerAndAlarm(tmp, listBoxTimersAndAlarms.Items.Count - 1, false));
                     }
                     else
                     {
